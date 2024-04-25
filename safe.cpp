@@ -64,6 +64,11 @@ public:
         return 1.0f - (static_cast<float>(deadline) / (deadline + 30));
     }
 
+    float getDeadlineFactor() const
+    {
+        return deadlineFactor;
+    }
+
     std::string getName() const
     {
         return name;
@@ -292,17 +297,9 @@ public:
     }
 
     // Method to add dependencies between tasks
-    void addDependency(const std::string &taskName, const std::string &dependencyName)
+    void addDependency(Task *task, Task *dependency)
     {
-        if (dependencyGraph.find(taskName) != dependencyGraph.end() && dependencyGraph.find(dependencyName) != dependencyGraph.end())
-        {
-            dependencyGraph[taskName]->dependencies.push_back(dependencyGraph[dependencyName]);
-            std::cout << "Dependency added successfully!" << std::endl;
-        }
-        else
-        {
-            std::cout << "Task or dependency not found. Please make sure both tasks exist." << std::endl;
-        }
+        dependencyGraph[task->getName()]->dependencies.push_back(dependencyGraph[dependency->getName()]);
     }
 
     // Method to mark task as completed
@@ -405,11 +402,10 @@ public:
             std::cout << "Select an option:" << std::endl;
             std::cout << "1. Add Task" << std::endl;
             std::cout << "2. Delete Task" << std::endl;
-            std::cout << "3. Add Dependency" << std::endl;
-            std::cout << "4. Exit" << std::endl;
+            std::cout << "3. Exit" << std::endl;
 
             int option;
-            std::cout << "Enter your choice (1-4): ";
+            std::cout << "Enter your choice (1-3): ";
             std::cin >> option;
 
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Clear the input buffer
@@ -423,9 +419,6 @@ public:
                 deleteTaskPrompt();
                 break;
             case 3:
-                addDependencyPrompt();
-                break;
-            case 4:
                 std::cout << "Exiting the program." << std::endl;
                 return;
             default:
@@ -468,17 +461,6 @@ public:
             std::cout << std::endl;
         }
     }
-
-    // Method to prompt user for dependency and add it
-    void addDependencyPrompt()
-    {
-        std::string taskName, dependencyName;
-        std::cout << "Enter the name of the task: ";
-        std::cin >> taskName;
-        std::cout << "Enter the name of the dependency task: ";
-        std::cin >> dependencyName;
-        addDependency(taskName, dependencyName);
-    }
 };
 
 int main()
@@ -517,7 +499,30 @@ int main()
 
     if (addDependencies == 'Y' || addDependencies == 'y')
     {
-        taskManager.addDependencyPrompt();
+        std::string taskName, dependencyName;
+        while (true)
+        {
+            std::cout << "Enter task name (type 'quit' to stop): ";
+            std::cin >> taskName;
+            if (taskName == "quit")
+                break;
+
+            std::cout << "Enter dependency name for task " << taskName << ": ";
+            std::cin >> dependencyName;
+
+            Task *task = taskManager.taskMap[taskName];
+            Task *dependency = taskManager.taskMap[dependencyName];
+
+            if (task && dependency)
+            {
+                taskManager.addDependency(task, dependency);
+                std::cout << "Dependency added successfully!\n";
+            }
+            else
+            {
+                std::cout << "Task or dependency not found. Please try again.\n";
+            }
+        }
     }
 
     // Execute tasks
