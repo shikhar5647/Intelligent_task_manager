@@ -1,37 +1,29 @@
-# Task Management System
+# Task Manager
 
-This project is aimed at creating a comprehensive task management system with various key features and integration with a relational database management system (DBMS).
+Task Manager is a C++ program designed to manage tasks, their dependencies, priorities, and completion statuses. It provides functionalities to add tasks, delete tasks, manage task dependencies, and execute tasks based on their priorities.
 
-## Key Features
+## Features
 
-### 1. Priority Queue for Task Scheduling
+- **Task Management:** Add tasks with names, descriptions, deadlines, and completion statuses.
+- **Task Deletion:** Delete tasks by name, removing them from the task list and dependencies.
+- **Task Dependency Management:** Establish dependencies between tasks to ensure proper execution order.
+- **Task Execution:** Execute tasks based on their priority, considering dependencies and completion statuses.
 
-- Implement a priority queue to manage tasks based on their priority levels.
-- Utilize algorithms like Dijkstra's or A* for dynamically adjusting priorities based on deadlines, dependencies, and user preferences.
+## Dependencies
 
-### 2. Graph Representation for Task Dependencies
+- C++ Standard Library
 
-- Model task dependencies using a graph structure.
-- Implement a topological sort algorithm to ensure proper task execution order.
+## Usage
 
-### 3. Segment Tree for Time Interval Queries
+1. **Compile:** Compile the program using a C++ compiler.
+2. **Run:** Execute the compiled program.
+3. **Task Creation:** Follow the prompts to create tasks, providing names, descriptions, deadlines, and completion statuses.
+4. **Dependency Setup (Optional):** Choose to establish dependencies between tasks if required.
+5. **Task Execution:** Execute tasks based on their priority and dependencies, ensuring proper completion.
 
-- Utilize a segment tree to efficiently handle time intervals for tasks with specific start and end times.
-- Implement algorithms for querying and updating time intervals.
+## Usage
 
-### 4. Trie for Autocomplete and Tagging
-
-- Implement a trie data structure for efficient autocomplete suggestions and tagging of tasks.
-- Use algorithms to search and insert into the trie for quick task identification.
-
-### 5. Red-Black Tree for Balanced Search Operations
-
-- Employ a red-black tree to maintain a balanced search structure for certain operations.
-- Utilize the tree for searching tasks based on keywords or specific criteria.
-
-## DBMS Integration
-
-- Utilize a relational database (e.g., SQLite or PostgreSQL) to store and manage task-related data.
-- Design a schema that accommodates task details, priorities, dependencies, and timestamps.
-
+1. **Compile:** Compile the program using a C++ compiler.
+   ```bash
+   g++ -o dsaIdeathon.cpp
 
